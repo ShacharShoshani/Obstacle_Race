@@ -5,4 +5,5 @@
     <dimen name="arrow_dimen">50dp</dimen>
     <dimen name="default_string_size">32sp</dimen>
     <dimen name="heart_margin">10dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
