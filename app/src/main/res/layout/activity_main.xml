@@ -37,24 +37,29 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/left_BTN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/arrow_left"
-            android:layout_row="14"
-            android:layout_column="0"
-            />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/left_BTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="14"
+        android:layout_column="0"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/left"
+        android:src="@drawable/arrow_left"
+        app:maxImageSize="@dimen/arrow_dimen"
+        />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/right_BTN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/arrow_right"
-            android:layout_row="14"
-            android:layout_column="2"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/right_BTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="14"
+        android:layout_column="2"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/right"
+        android:src="@drawable/arrow_right"
+        app:maxImageSize="@dimen/arrow_dimen"
+        />
 </GridLayout>
