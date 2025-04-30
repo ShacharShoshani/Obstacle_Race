@@ -7,13 +7,10 @@
 
     <path
         android:fillColor="@android:color/transparent"
-        android:pathData="M 50 5 C 74.8528137424 5 95 25.1471862576 95 50 C 95 74.8528137424 74.8528137424 95 50 95 C 25.1471862576 95 5 74.8528137424 5 50 C 5 25.1471862576 25.1471862576 5 50 5 Z" />
-    <path
-        android:fillColor="@android:color/transparent"
-        android:strokeColor="#ffffff"
+        android:pathData="M35 50 L75 50 M65 40 L75 50 M65 60 L75 50"
         android:strokeWidth="3"
-        android:strokeLineCap="round"
-        android:pathData="M35 50 L75 50 M65 40 L75 50 M65 60 L75 50" />
+        android:strokeColor="#ffffff"
+        android:strokeLineCap="round" />
 </vector>
 
-<!--    android:fillColor="#e91e63"-->
+    <!--    android:fillColor="#e91e63"-->

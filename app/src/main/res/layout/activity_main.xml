@@ -45,8 +45,10 @@
         android:layout_margin="@dimen/fab_margin"
         android:contentDescription="@string/left"
         android:src="@drawable/arrow_left"
+        app:backgroundTint="@color/button_background"
         app:maxImageSize="@dimen/arrow_dimen"
-        />
+        app:shapeAppearanceOverlay="@style/button_rounded"
+        app:tint="@color/white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/right_BTN"
@@ -58,6 +60,8 @@
         android:layout_margin="@dimen/fab_margin"
         android:contentDescription="@string/right"
         android:src="@drawable/arrow_right"
+        app:backgroundTint="@color/button_background"
         app:maxImageSize="@dimen/arrow_dimen"
-        />
+        app:shapeAppearanceOverlay="@style/button_rounded"
+        app:tint="@color/white" />
 </GridLayout>
