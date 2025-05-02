@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateMarginsRelative
 import com.example.obstaclerace.logic.GameManager
+import com.example.obstaclerace.logic.VibrationManager
 import com.example.obstaclerace.utilities.Constants
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var asteroid: AppCompatImageView
 
     private lateinit var gameManager: GameManager
+    private lateinit var vibrationManager: VibrationManager
     private lateinit var timer: CountDownTimer
     private lateinit var toast: Toast
 
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         }
         findViews()
         gameManager = GameManager(main_IMG_hearts.size)
+        vibrationManager = VibrationManager(this)
         initViews()
         toast = Toast(this)
         toast.duration = Toast.LENGTH_SHORT
@@ -74,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         refreshLifeCount()
 
         displayCrashMessage()
-
+        vibrationManager.vibrate()
     }
 
     private fun displayCrashMessage() {
