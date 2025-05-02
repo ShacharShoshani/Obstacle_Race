@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateMarginsRelative
 import com.example.obstaclerace.logic.GameManager
+import com.example.obstaclerace.utilities.Constants
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlin.system.exitProcess
 
@@ -59,8 +60,12 @@ class MainActivity : AppCompatActivity() {
     private fun checkIfPlayerCrashed() {
         player.getLocationOnScreen(playerPosition)
         asteroid.getLocationOnScreen(asteroidPosition)
+        val yDiff = playerPosition[1] - asteroidPosition[1]
 
-        if (playerPosition[0] - asteroidPosition[0] <= 140 && playerPosition[1] - asteroidPosition[1] <= 200)
+        if (yDiff >= -Constants.PlayerAsteroidOverlap.VERTICAL_DISTANCE
+            && yDiff <= Constants.PlayerAsteroidOverlap.VERTICAL_DISTANCE
+            && playerPosition[0] - asteroidPosition[0] == 0
+        )
             exitProcess(0)
     }
 

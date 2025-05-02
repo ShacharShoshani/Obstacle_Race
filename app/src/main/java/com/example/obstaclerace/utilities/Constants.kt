@@ -12,4 +12,8 @@ class Constants {
         const val MIN = -75
         const val STEP = 100
     }
+
+    object PlayerAsteroidOverlap {
+        const val VERTICAL_DISTANCE = 200
+    }
 }
