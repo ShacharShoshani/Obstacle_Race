@@ -33,22 +33,19 @@ class MainActivity : AppCompatActivity() {
         }
         findViews()
         gameManager = GameManager()
-        timer = object : CountDownTimer(30000, 1000) {
+        initViews()
+
+        timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 gameManager.moveAsteroid()
                 refreshAsteroid()
             }
 
             override fun onFinish() {
-
+                timer.start()
             }
 
         }
-        initViews()
-        gameLoop()
-    }
-
-    private fun gameLoop() {
         timer.start()
     }
 
