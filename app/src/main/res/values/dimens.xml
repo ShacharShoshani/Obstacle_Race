@@ -8,4 +8,5 @@
     <dimen name="heart_margin">10dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="space_ship_bottom_margin">95dp</dimen>
+    <dimen name="row_height">105dp</dimen>
 </resources>

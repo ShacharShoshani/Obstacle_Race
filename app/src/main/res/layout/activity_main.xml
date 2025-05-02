@@ -1,77 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnCount="3"
     android:layoutDirection="ltr"
-    android:rowCount="15"
+    android:stretchColumns="3"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin">
+    <TableRow android:layout_height="@dimen/row_height">
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/main_IMG_heart0"
+                android:layout_width="@dimen/heart_dimen"
+                android:layout_height="@dimen/heart_dimen"
+                app:srcCompat="@drawable/heart" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/main_IMG_heart1"
+                android:layout_width="@dimen/heart_dimen"
+                android:layout_height="@dimen/heart_dimen"
+                android:layout_marginHorizontal="@dimen/heart_margin"
+                app:srcCompat="@drawable/heart" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/main_IMG_heart2"
+                android:layout_width="@dimen/heart_dimen"
+                android:layout_height="@dimen/heart_dimen"
+                app:srcCompat="@drawable/heart" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </TableRow>
+
+    <TableRow android:layout_height="@dimen/row_height">
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/main_IMG_heart0"
-            android:layout_width="@dimen/heart_dimen"
-            android:layout_height="@dimen/heart_dimen"
-            app:srcCompat="@drawable/heart" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/main_IMG_heart1"
-            android:layout_width="@dimen/heart_dimen"
-            android:layout_height="@dimen/heart_dimen"
-            android:layout_marginHorizontal="@dimen/heart_margin"
-            app:srcCompat="@drawable/heart" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/main_IMG_heart2"
-            android:layout_width="@dimen/heart_dimen"
-            android:layout_height="@dimen/heart_dimen"
-            app:srcCompat="@drawable/heart" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:id="@+id/player_IMG"
+            android:layout_width="@dimen/spaceship_dimen"
+            android:layout_height="@dimen/spaceship_dimen"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="@dimen/spaceship_dimen"
+            app:srcCompat="@drawable/spaceship" />
+    </TableRow>
 
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/player_IMG"
-        android:layout_width="@dimen/spaceship_dimen"
-        android:layout_height="@dimen/spaceship_dimen"
-        android:layout_row="13"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/spaceship_dimen"
-        app:srcCompat="@drawable/spaceship" />
+    <TableRow>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/left_BTN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_row="14"
-        android:layout_column="0"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="@dimen/fab_margin"
-        android:contentDescription="@string/left"
-        android:src="@drawable/arrow_left"
-        app:backgroundTint="@color/button_background"
-        app:maxImageSize="@dimen/arrow_dimen"
-        app:shapeAppearanceOverlay="@style/button_rounded"
-        app:tint="@color/white" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/left_BTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="@dimen/fab_margin"
+            android:contentDescription="@string/left"
+            android:src="@drawable/arrow_left"
+            app:backgroundTint="@color/button_background"
+            app:maxImageSize="@dimen/arrow_dimen"
+            app:shapeAppearanceOverlay="@style/button_rounded"
+            app:tint="@color/white" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/right_BTN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_row="14"
-        android:layout_column="2"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:contentDescription="@string/right"
-        android:src="@drawable/arrow_right"
-        app:backgroundTint="@color/button_background"
-        app:maxImageSize="@dimen/arrow_dimen"
-        app:shapeAppearanceOverlay="@style/button_rounded"
-        app:tint="@color/white" />
-</GridLayout>
+        <View
+            android:layout_width="250dp"
+            android:layout_height="match_parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/right_BTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:contentDescription="@string/right"
+            android:src="@drawable/arrow_right"
+            app:backgroundTint="@color/button_background"
+            app:maxImageSize="@dimen/arrow_dimen"
+            app:shapeAppearanceOverlay="@style/button_rounded"
+            app:tint="@color/white" />
+    </TableRow>
+
+
+</TableLayout>
