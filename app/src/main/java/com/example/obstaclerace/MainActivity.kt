@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var left_BTN: FloatingActionButton
     private lateinit var right_BTN: FloatingActionButton
     private lateinit var player: AppCompatImageView
-    private lateinit var asteroid: AppCompatImageView
+    private lateinit var asteroids: Array<AppCompatImageView>
 
     private lateinit var gameManager: GameManager
     private lateinit var vibrationManager: VibrationManager
@@ -101,13 +101,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isCrashed(): Boolean {
-        player.getLocationOnScreen(playerPosition)
-        asteroid.getLocationOnScreen(asteroidPosition)
-        val yDiff = playerPosition[1] - asteroidPosition[1]
+        var yDiff: Int
 
-        return yDiff >= -Constants.PlayerAsteroidOverlap.VERTICAL_DISTANCE
+        for (asteroid in asteroids) {
+            player.getLocationOnScreen(playerPosition)
+            asteroid.getLocationOnScreen(asteroidPosition)
+            yDiff = playerPosition[1] - asteroidPosition[1]
+
+            if (yDiff >= -Constants.PlayerAsteroidOverlap.VERTICAL_DISTANCE
                 && yDiff <= Constants.PlayerAsteroidOverlap.VERTICAL_DISTANCE
                 && playerPosition[0] - asteroidPosition[0] == 0
+            )
+                return true
+        }
+
+        return false
     }
 
     private fun initViews() {
@@ -118,13 +126,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshAsteroid() {
-        val layoutParams: RelativeLayout.LayoutParams =
-            RelativeLayout.LayoutParams(asteroid.layoutParams)
+        var offset = 0
 
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-        layoutParams.bottomMargin = gameManager.asteroidHeight
+        for (asteroid in asteroids) {
+            val layoutParams: RelativeLayout.LayoutParams =
+                RelativeLayout.LayoutParams(asteroid.layoutParams)
 
-        asteroid.layoutParams = layoutParams
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+
+            if (asteroid.id == R.id.asteroid_IMG_2) {
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
+                offset = Constants.AsteroidHeight.STEP_OFFSET
+            } else if (asteroid.id == R.id.asteroid_IMG_3) {
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END)
+                offset = Constants.AsteroidHeight.STEP_OFFSET * 2
+            }
+
+            layoutParams.bottomMargin = gameManager.asteroidHeight - offset
+
+            asteroid.layoutParams = layoutParams
+        }
     }
 
     private fun moveClick(left: Boolean = false) {
@@ -165,11 +186,15 @@ class MainActivity : AppCompatActivity() {
         left_BTN = findViewById(R.id.left_BTN)
         right_BTN = findViewById(R.id.right_BTN)
         player = findViewById(R.id.player_IMG)
-        asteroid = findViewById(R.id.asteroid_IMG)
         main_IMG_hearts = arrayOf(
             findViewById(R.id.main_IMG_heart0),
             findViewById(R.id.main_IMG_heart1),
             findViewById(R.id.main_IMG_heart2)
+        )
+        asteroids = arrayOf(
+            findViewById(R.id.asteroid_IMG_1),
+            findViewById(R.id.asteroid_IMG_2),
+            findViewById(R.id.asteroid_IMG_3)
         )
     }
 }

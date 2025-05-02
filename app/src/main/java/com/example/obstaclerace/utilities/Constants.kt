@@ -11,6 +11,7 @@ class Constants {
         const val MAX = 2000
         const val MIN = -75
         const val STEP = 100
+        const val STEP_OFFSET = 400
     }
 
     object PlayerAsteroidOverlap {

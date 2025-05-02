@@ -34,20 +34,36 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/asteroid_IMG"
+        android:id="@+id/asteroid_IMG_1"
         android:layout_width="@dimen/spaceship_dimen"
         android:layout_height="@dimen/spaceship_dimen"
-        app:srcCompat="@drawable/asteroid"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        app:srcCompat="@drawable/asteroid" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/asteroid_IMG_2"
+        android:layout_width="@dimen/spaceship_dimen"
+        android:layout_height="@dimen/spaceship_dimen"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        app:srcCompat="@drawable/asteroid" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/asteroid_IMG_3"
+        android:layout_width="@dimen/spaceship_dimen"
+        android:layout_height="@dimen/spaceship_dimen"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        app:srcCompat="@drawable/asteroid" />
 
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/player_IMG"
         android:layout_width="@dimen/spaceship_dimen"
         android:layout_height="@dimen/spaceship_dimen"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/spaceship_bottom_margin"
-        app:srcCompat="@drawable/spaceship"
-        android:layout_alignParentBottom="true"/>
+        app:srcCompat="@drawable/spaceship" />
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -71,7 +87,7 @@
         <View
             android:layout_width="230dp"
             android:layout_height="0dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/right_BTN"
