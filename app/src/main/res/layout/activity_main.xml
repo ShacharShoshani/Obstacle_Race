@@ -36,14 +36,14 @@
 
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/plane_IMG"
-        android:layout_width="@dimen/space_ship_dimen"
-        android:layout_height="@dimen/space_ship_dimen"
+        android:id="@+id/player_IMG"
+        android:layout_width="@dimen/spaceship_dimen"
+        android:layout_height="@dimen/spaceship_dimen"
         android:layout_row="14"
         android:layout_column="1"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/space_ship_dimen"
-        app:srcCompat="@drawable/space_ship" />
+        android:layout_marginBottom="@dimen/spaceship_dimen"
+        app:srcCompat="@drawable/spaceship" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/left_BTN"
