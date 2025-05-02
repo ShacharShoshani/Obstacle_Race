@@ -70,8 +70,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        left_BTN.setOnClickListener { view: View -> moveClick(true) }
-        right_BTN.setOnClickListener { view: View -> moveClick() }
+        left_BTN.setOnClickListener { _: View -> moveClick(true) }
+        right_BTN.setOnClickListener { _: View -> moveClick() }
         refreshPlayer()
         refreshAsteroid()
     }
@@ -95,18 +95,24 @@ class MainActivity : AppCompatActivity() {
         val layoutParams: RelativeLayout.LayoutParams =
             RelativeLayout.LayoutParams(player.layoutParams)
 
-        if (gameManager.playerColumn == 0) {
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_START)
-            layoutParams.removeRule(RelativeLayout.CENTER_IN_PARENT)
-            layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_END)
-        } else if (gameManager.playerColumn == 1) {
-            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
-            layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_START)
-            layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_END)
-        } else {
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END)
-            layoutParams.removeRule(RelativeLayout.CENTER_IN_PARENT)
-            layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_START)
+        when (gameManager.playerColumn) {
+            0 -> {
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_START)
+                layoutParams.removeRule(RelativeLayout.CENTER_IN_PARENT)
+                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_END)
+            }
+
+            1 -> {
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
+                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_START)
+                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_END)
+            }
+
+            else -> {
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END)
+                layoutParams.removeRule(RelativeLayout.CENTER_IN_PARENT)
+                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_START)
+            }
         }
 
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
