@@ -33,6 +33,13 @@
             app:srcCompat="@drawable/heart" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/asteroid_IMG"
+        android:layout_width="@dimen/spaceship_dimen"
+        android:layout_height="@dimen/spaceship_dimen"
+        app:srcCompat="@drawable/asteroid"
+        android:layout_alignParentBottom="true"/>
+
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/player_IMG"
