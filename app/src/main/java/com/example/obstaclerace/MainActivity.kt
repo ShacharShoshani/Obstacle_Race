@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateMarginsRelative
 import com.example.obstaclerace.logic.GameManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     private lateinit var main_IMG_hearts: Array<AppCompatImageView>
@@ -19,8 +20,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var right_BTN: FloatingActionButton
     private lateinit var player: AppCompatImageView
     private lateinit var asteroid: AppCompatImageView
+
     private lateinit var gameManager: GameManager
     private lateinit var timer: CountDownTimer
+
+    private val playerPosition: IntArray = IntArray(2)
+    private val asteroidPosition: IntArray = IntArray(2)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +44,8 @@ class MainActivity : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 gameManager.moveAsteroid()
                 refreshAsteroid()
+
+                checkIfPlayerCrashed()
             }
 
             override fun onFinish() {
@@ -47,6 +54,14 @@ class MainActivity : AppCompatActivity() {
 
         }
         timer.start()
+    }
+
+    private fun checkIfPlayerCrashed() {
+        player.getLocationOnScreen(playerPosition)
+        asteroid.getLocationOnScreen(asteroidPosition)
+
+        if (playerPosition[0] - asteroidPosition[0] <= 140 && playerPosition[1] - asteroidPosition[1] <= 200)
+            exitProcess(0)
     }
 
     private fun initViews() {
