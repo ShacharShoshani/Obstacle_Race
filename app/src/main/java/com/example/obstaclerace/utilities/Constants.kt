@@ -10,5 +10,6 @@ class Constants {
     object AsteroidHeight {
         const val MAX = 2000
         const val MIN = -75
+        const val STEP = 100
     }
 }

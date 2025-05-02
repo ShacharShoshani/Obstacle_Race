@@ -20,6 +20,6 @@ class GameManager() {
         if (asteroidHeight <= Constants.AsteroidHeight.MIN)
             asteroidHeight = Constants.AsteroidHeight.MAX
         else
-            asteroidHeight -= 100
+            asteroidHeight -= Constants.AsteroidHeight.STEP
     }
 }
