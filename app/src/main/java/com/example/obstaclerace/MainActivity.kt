@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var gameManager: GameManager
     private lateinit var timer: CountDownTimer
+    private lateinit var toast: Toast
 
     private val playerPosition: IntArray = IntArray(2)
     private val asteroidPosition: IntArray = IntArray(2)
@@ -39,6 +41,8 @@ class MainActivity : AppCompatActivity() {
         findViews()
         gameManager = GameManager(main_IMG_hearts.size)
         initViews()
+        toast = Toast(this)
+        toast.duration = Toast.LENGTH_SHORT
 
         timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -60,10 +64,28 @@ class MainActivity : AppCompatActivity() {
         if (!isCrashed())
             return
         else {
-            gameManager.updateCrashCount()
-            refreshLifeCount()
+            respondToCrash()
         }
 
+    }
+
+    private fun respondToCrash() {
+        gameManager.updateCrashCount()
+        refreshLifeCount()
+
+        dispalyCrashMessage()
+
+    }
+
+    private fun dispalyCrashMessage() {
+        val text: String =
+            if (gameManager.crashCount > 0)
+                "The spaceship hit an asteroid!"
+            else "Game Over. Restarting"
+
+        toast.cancel()
+        toast.setText(text)
+        toast.show()
     }
 
     private fun refreshLifeCount() {
