@@ -2,12 +2,13 @@ package com.example.obstaclerace
 
 import android.os.Bundle
 import android.view.View
-import android.widget.GridLayout
+import android.widget.RelativeLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateMarginsRelative
 import com.example.obstaclerace.logic.GameManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -16,7 +17,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var left_BTN: FloatingActionButton
     private lateinit var right_BTN: FloatingActionButton
     private lateinit var player: AppCompatImageView
-    private lateinit var mainGrid: GridLayout
     private lateinit var gameManager: GameManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +45,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshUI() {
-        mainGrid.removeView(player)
-        mainGrid.addView(player, gameManager.playerColumn)
+        val layoutParams: RelativeLayout.LayoutParams =
+            RelativeLayout.LayoutParams(player.layoutParams)
+
+        if (gameManager.playerColumn == 0) {
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_START)
+            layoutParams.removeRule(RelativeLayout.CENTER_IN_PARENT)
+            layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_END)
+        } else if (gameManager.playerColumn == 1) {
+            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
+            layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_START)
+            layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_END)
+        } else {
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END)
+            layoutParams.removeRule(RelativeLayout.CENTER_IN_PARENT)
+            layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_START)
+        }
+
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+        layoutParams.updateMarginsRelative(bottom = 250)
+        player.layoutParams = layoutParams
     }
 
     private fun findViews() {
@@ -58,6 +76,5 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.main_IMG_heart1),
             findViewById(R.id.main_IMG_heart2)
         )
-        mainGrid = findViewById(R.id.main)
     }
 }

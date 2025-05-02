@@ -1,54 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="ltr"
-    android:stretchColumns="3"
     tools:context=".MainActivity">
 
-    <TableRow android:layout_height="@dimen/row_height">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/main_IMG_heart0"
-                android:layout_width="@dimen/heart_dimen"
-                android:layout_height="@dimen/heart_dimen"
-                app:srcCompat="@drawable/heart" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/main_IMG_heart1"
-                android:layout_width="@dimen/heart_dimen"
-                android:layout_height="@dimen/heart_dimen"
-                android:layout_marginHorizontal="@dimen/heart_margin"
-                app:srcCompat="@drawable/heart" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/main_IMG_heart2"
-                android:layout_width="@dimen/heart_dimen"
-                android:layout_height="@dimen/heart_dimen"
-                app:srcCompat="@drawable/heart" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </TableRow>
-
-    <TableRow android:layout_height="@dimen/row_height">
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/player_IMG"
-            android:layout_width="@dimen/spaceship_dimen"
-            android:layout_height="@dimen/spaceship_dimen"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="@dimen/spaceship_dimen"
-            app:srcCompat="@drawable/spaceship" />
-    </TableRow>
+            android:id="@+id/main_IMG_heart0"
+            android:layout_width="@dimen/heart_dimen"
+            android:layout_height="@dimen/heart_dimen"
+            app:srcCompat="@drawable/heart" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_heart1"
+            android:layout_width="@dimen/heart_dimen"
+            android:layout_height="@dimen/heart_dimen"
+            android:layout_marginHorizontal="@dimen/heart_margin"
+            app:srcCompat="@drawable/heart" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_heart2"
+            android:layout_width="@dimen/heart_dimen"
+            android:layout_height="@dimen/heart_dimen"
+            app:srcCompat="@drawable/heart" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    <TableRow>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/player_IMG"
+        android:layout_width="@dimen/spaceship_dimen"
+        android:layout_height="@dimen/spaceship_dimen"
+        android:layout_marginBottom="@dimen/spaceship_bottom_margin"
+        app:srcCompat="@drawable/spaceship"
+        android:layout_alignParentBottom="true"/>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/left_BTN"
@@ -64,8 +62,9 @@
             app:tint="@color/white" />
 
         <View
-            android:layout_width="250dp"
-            android:layout_height="match_parent" />
+            android:layout_width="230dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/right_BTN"
@@ -79,7 +78,7 @@
             app:maxImageSize="@dimen/arrow_dimen"
             app:shapeAppearanceOverlay="@style/button_rounded"
             app:tint="@color/white" />
-    </TableRow>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-</TableLayout>
+</RelativeLayout>
