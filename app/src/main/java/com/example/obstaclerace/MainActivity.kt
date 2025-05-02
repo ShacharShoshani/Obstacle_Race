@@ -73,11 +73,11 @@ class MainActivity : AppCompatActivity() {
         gameManager.updateCrashCount()
         refreshLifeCount()
 
-        dispalyCrashMessage()
+        displayCrashMessage()
 
     }
 
-    private fun dispalyCrashMessage() {
+    private fun displayCrashMessage() {
         val text: String =
             if (gameManager.crashCount > 0)
                 "The spaceship hit an asteroid!"
