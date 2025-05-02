@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         findViews()
         gameManager = GameManager(main_IMG_hearts.size)
         vibrationManager = VibrationManager(this)
@@ -47,48 +48,35 @@ class MainActivity : AppCompatActivity() {
         toast = Toast(this)
         toast.duration = Toast.LENGTH_SHORT
 
-        timer = object : CountDownTimer(60000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                gameManager.moveAsteroid()
-                refreshAsteroid()
-
-                checkIfPlayerCrashed()
-            }
-
-            override fun onFinish() {
-                timer.start()
-            }
-
-        }
-        timer.start()
+        gameLoop()
     }
 
-    private fun checkIfPlayerCrashed() {
-        if (!isCrashed())
-            return
-        else {
-            respondToCrash()
-        }
-
+    private fun findViews() {
+        left_BTN = findViewById(R.id.left_BTN)
+        right_BTN = findViewById(R.id.right_BTN)
+        player = findViewById(R.id.player_IMG)
+        main_IMG_hearts = arrayOf(
+            findViewById(R.id.main_IMG_heart0),
+            findViewById(R.id.main_IMG_heart1),
+            findViewById(R.id.main_IMG_heart2)
+        )
+        asteroids = arrayOf(
+            findViewById(R.id.asteroid_IMG_1),
+            findViewById(R.id.asteroid_IMG_2),
+            findViewById(R.id.asteroid_IMG_3)
+        )
     }
 
-    private fun respondToCrash() {
-        gameManager.updateCrashCount()
-        refreshLifeCount()
-
-        displayCrashMessage()
-        vibrationManager.vibrate()
+    private fun initViews() {
+        left_BTN.setOnClickListener { _: View -> moveClick(true) }
+        right_BTN.setOnClickListener { _: View -> moveClick() }
+        refreshPlayer()
+        refreshAsteroid()
     }
 
-    private fun displayCrashMessage() {
-        val text: String =
-            if (gameManager.crashCount > 0)
-                "The spaceship hit an asteroid!"
-            else "Game Over. Restarting"
-
-        toast.cancel()
-        toast.setText(text)
-        toast.show()
+    private fun moveClick(left: Boolean = false) {
+        gameManager.movePlayer(left)
+        refreshPlayer()
     }
 
     private fun refreshLifeCount() {
@@ -98,31 +86,6 @@ class MainActivity : AppCompatActivity() {
         else
             for (heart in main_IMG_hearts)
                 heart.visibility = View.VISIBLE
-    }
-
-    private fun isCrashed(): Boolean {
-        var yDiff: Int
-
-        for (asteroid in asteroids) {
-            player.getLocationOnScreen(playerPosition)
-            asteroid.getLocationOnScreen(asteroidPosition)
-            yDiff = playerPosition[1] - asteroidPosition[1]
-
-            if (yDiff >= -Constants.PlayerAsteroidOverlap.VERTICAL_DISTANCE
-                && yDiff <= Constants.PlayerAsteroidOverlap.VERTICAL_DISTANCE
-                && playerPosition[0] - asteroidPosition[0] == 0
-            )
-                return true
-        }
-
-        return false
-    }
-
-    private fun initViews() {
-        left_BTN.setOnClickListener { _: View -> moveClick(true) }
-        right_BTN.setOnClickListener { _: View -> moveClick() }
-        refreshPlayer()
-        refreshAsteroid()
     }
 
     private fun refreshAsteroid() {
@@ -146,11 +109,6 @@ class MainActivity : AppCompatActivity() {
 
             asteroid.layoutParams = layoutParams
         }
-    }
-
-    private fun moveClick(left: Boolean = false) {
-        gameManager.movePlayer(left)
-        refreshPlayer()
     }
 
     private fun refreshPlayer() {
@@ -182,19 +140,66 @@ class MainActivity : AppCompatActivity() {
         player.layoutParams = layoutParams
     }
 
-    private fun findViews() {
-        left_BTN = findViewById(R.id.left_BTN)
-        right_BTN = findViewById(R.id.right_BTN)
-        player = findViewById(R.id.player_IMG)
-        main_IMG_hearts = arrayOf(
-            findViewById(R.id.main_IMG_heart0),
-            findViewById(R.id.main_IMG_heart1),
-            findViewById(R.id.main_IMG_heart2)
-        )
-        asteroids = arrayOf(
-            findViewById(R.id.asteroid_IMG_1),
-            findViewById(R.id.asteroid_IMG_2),
-            findViewById(R.id.asteroid_IMG_3)
-        )
+    private fun gameLoop() {
+        timer = object : CountDownTimer(60000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                gameManager.moveAsteroid()
+                refreshAsteroid()
+
+                checkIfPlayerCrashed()
+            }
+
+            override fun onFinish() {
+                timer.start()
+            }
+
+        }
+        timer.start()
+    }
+
+    private fun checkIfPlayerCrashed() {
+        if (!isCrashed())
+            return
+        else {
+            respondToCrash()
+        }
+
+    }
+
+    private fun isCrashed(): Boolean {
+        var yDiff: Int
+
+        for (asteroid in asteroids) {
+            player.getLocationOnScreen(playerPosition)
+            asteroid.getLocationOnScreen(asteroidPosition)
+            yDiff = playerPosition[1] - asteroidPosition[1]
+
+            if (yDiff >= -Constants.PlayerAsteroidOverlap.VERTICAL_DISTANCE
+                && yDiff <= Constants.PlayerAsteroidOverlap.VERTICAL_DISTANCE
+                && playerPosition[0] - asteroidPosition[0] == 0
+            )
+                return true
+        }
+
+        return false
+    }
+
+    private fun respondToCrash() {
+        gameManager.updateCrashCount()
+        refreshLifeCount()
+
+        displayCrashMessage()
+        vibrationManager.vibrate()
+    }
+
+    private fun displayCrashMessage() {
+        val text: String =
+            if (gameManager.crashCount > 0)
+                "The spaceship hit an asteroid!"
+            else "Game Over. Restarting"
+
+        toast.cancel()
+        toast.setText(text)
+        toast.show()
     }
 }
