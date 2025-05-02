@@ -13,7 +13,6 @@ import androidx.core.view.updateMarginsRelative
 import com.example.obstaclerace.logic.GameManager
 import com.example.obstaclerace.utilities.Constants
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     private lateinit var main_IMG_hearts: Array<AppCompatImageView>
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         findViews()
-        gameManager = GameManager()
+        gameManager = GameManager(main_IMG_hearts.size)
         initViews()
 
         timer = object : CountDownTimer(60000, 1000) {
@@ -58,15 +57,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkIfPlayerCrashed() {
+        if (!isCrashed())
+            return
+        else {
+            gameManager.updateCrashCount()
+            refreshLifeCount()
+        }
+
+    }
+
+    private fun refreshLifeCount() {
+        if (gameManager.crashCount > 0)
+            main_IMG_hearts[main_IMG_hearts.size - gameManager.crashCount].visibility =
+                View.INVISIBLE
+        else
+            for (heart in main_IMG_hearts)
+                heart.visibility = View.VISIBLE
+    }
+
+    private fun isCrashed(): Boolean {
         player.getLocationOnScreen(playerPosition)
         asteroid.getLocationOnScreen(asteroidPosition)
         val yDiff = playerPosition[1] - asteroidPosition[1]
 
-        if (yDiff >= -Constants.PlayerAsteroidOverlap.VERTICAL_DISTANCE
-            && yDiff <= Constants.PlayerAsteroidOverlap.VERTICAL_DISTANCE
-            && playerPosition[0] - asteroidPosition[0] == 0
-        )
-            exitProcess(0)
+        return yDiff >= -Constants.PlayerAsteroidOverlap.VERTICAL_DISTANCE
+                && yDiff <= Constants.PlayerAsteroidOverlap.VERTICAL_DISTANCE
+                && playerPosition[0] - asteroidPosition[0] == 0
     }
 
     private fun initViews() {
