@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         vibrationManager = VibrationManager(this)
         initViews()
         toast = Toast(this)
-        toast.duration = Toast.LENGTH_SHORT
+        toast.duration = Toast.LENGTH_LONG
 
         gameLoop()
     }
