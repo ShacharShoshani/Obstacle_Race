@@ -19,7 +19,7 @@ class GameManager(private val lifeCount: Int) {
             playerColumn++
     }
 
-    fun moveAsteroid() {
+    fun moveAsteroids() {
         if (asteroidHeight <= Constants.AsteroidHeight.MIN)
             asteroidHeight = Constants.AsteroidHeight.MAX
         else

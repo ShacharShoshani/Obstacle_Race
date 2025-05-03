@@ -42,12 +42,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViews()
-        gameManager = GameManager(main_IMG_hearts.size)
-        vibrationManager = VibrationManager(this)
-        initViews()
-        toast = Toast(this)
-        toast.duration = Toast.LENGTH_LONG
-
+        initApplication()
         gameLoop()
     }
 
@@ -67,11 +62,17 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    private fun initApplication() {
+        gameManager = GameManager(main_IMG_hearts.size)
+        vibrationManager = VibrationManager(this)
+        initViews()
+    }
+
     private fun initViews() {
         left_BTN.setOnClickListener { _: View -> moveClick(true) }
         right_BTN.setOnClickListener { _: View -> moveClick() }
-        refreshPlayer()
-        refreshAsteroid()
+        toast = Toast(this)
+        toast.duration = Toast.LENGTH_LONG
     }
 
     private fun moveClick(left: Boolean = false) {
@@ -88,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                 heart.visibility = View.VISIBLE
     }
 
-    private fun refreshAsteroid() {
+    private fun refreshAsteroids() {
         var offset = 0
 
         for (asteroid in asteroids) {
@@ -143,8 +144,8 @@ class MainActivity : AppCompatActivity() {
     private fun gameLoop() {
         timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                gameManager.moveAsteroid()
-                refreshAsteroid()
+                gameManager.moveAsteroids()
+                refreshAsteroids()
 
                 checkIfPlayerCrashed()
             }
