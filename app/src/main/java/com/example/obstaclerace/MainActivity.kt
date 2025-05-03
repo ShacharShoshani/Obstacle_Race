@@ -196,8 +196,8 @@ class MainActivity : AppCompatActivity() {
     private fun displayCrashMessage() {
         val text: String =
             if (gameManager.crashCount > 0)
-                "The spaceship hit an asteroid!"
-            else "Game Over. Restarting"
+                Constants.Toast.CRASH_MESSAGE
+            else Constants.Toast.GAME_OVER
 
         toast.cancel()
         toast.setText(text)

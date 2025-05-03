@@ -17,4 +17,9 @@ class Constants {
     object PlayerAsteroidOverlap {
         const val VERTICAL_DISTANCE = 200
     }
+
+    object Toast {
+        const val CRASH_MESSAGE = "The spaceship hit an asteroid!"
+        const val GAME_OVER = "Game Over. Restarting"
+    }
 }
