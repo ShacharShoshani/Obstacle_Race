@@ -11,9 +11,11 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateMarginsRelative
+import com.example.obstaclerace.interfaces.TiltCallback
 import com.example.obstaclerace.logic.GameManager
 import com.example.obstaclerace.logic.VibrationManager
 import com.example.obstaclerace.utilities.Constants
+import com.example.obstaclerace.utilities.TiltDetector
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var vibrationManager: VibrationManager
     private lateinit var timer: CountDownTimer
     private lateinit var toast: Toast
+    private lateinit var tiltDetector: TiltDetector
 
     private val playerPosition: IntArray = IntArray(2)
     private val asteroidPosition: IntArray = IntArray(2)
@@ -66,6 +69,25 @@ class MainActivity : AppCompatActivity() {
         gameManager = GameManager(main_IMG_hearts.size)
         vibrationManager = VibrationManager(this)
         initViews()
+        initTiltDetector()
+    }
+
+    private fun initTiltDetector() {
+        tiltDetector = TiltDetector(
+            context = this,
+            tiltCallback = object : TiltCallback {
+                override fun tiltX() {
+                    tiltDetector.tiltLeft.also {
+                        gameManager.movePlayer(it)
+                        refreshPlayer()
+                    }
+                }
+
+                override fun tiltY() {
+
+                }
+            }
+        )
     }
 
     private fun initViews() {
@@ -142,6 +164,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun gameLoop() {
+        tiltDetector.start()
+
         timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 gameManager.moveAsteroids()
