@@ -6,7 +6,6 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import com.example.obstaclerace.interfaces.TiltCallback
-import kotlin.math.abs
 
 class TiltDetector(context: Context, private var tiltCallback: TiltCallback?) {
 
@@ -18,7 +17,7 @@ class TiltDetector(context: Context, private var tiltCallback: TiltCallback?) {
 
     private lateinit var sensorEventListener: SensorEventListener
 
-    var tiltLeft: Boolean = true
+    var tiltX: Float = 0f
         private set
 
     private var timestamp: Long = 0L
@@ -45,7 +44,7 @@ class TiltDetector(context: Context, private var tiltCallback: TiltCallback?) {
     private fun calculateTilt(x: Float, y: Float) {
         if (System.currentTimeMillis() - timestamp >= 500) {
             timestamp = System.currentTimeMillis()
-            tiltLeft = abs(x) > 3.0f
+            tiltX = x
             tiltCallback?.tiltX()
         }
     }

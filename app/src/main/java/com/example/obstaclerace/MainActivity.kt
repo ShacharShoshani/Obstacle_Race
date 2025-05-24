@@ -77,9 +77,11 @@ class MainActivity : AppCompatActivity() {
             context = this,
             tiltCallback = object : TiltCallback {
                 override fun tiltX() {
-                    tiltDetector.tiltLeft.also {
-                        gameManager.movePlayer(it)
-                        refreshPlayer()
+                    tiltDetector.tiltX.also {
+                        if(it != 0f){
+                            gameManager.movePlayer(it > 0)
+                            refreshPlayer()
+                        }
                     }
                 }
 
