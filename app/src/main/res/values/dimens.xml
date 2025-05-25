@@ -4,6 +4,7 @@
     <dimen name="heart_dimen">40dp</dimen>
     <dimen name="arrow_dimen">75dp</dimen>
     <dimen name="spaceship_dimen">70dp</dimen>
+    <dimen name="coin_dimen">50dp</dimen>
     <dimen name="default_string_size">32sp</dimen>
     <dimen name="heart_margin">10dp</dimen>
     <dimen name="fab_margin">16dp</dimen>

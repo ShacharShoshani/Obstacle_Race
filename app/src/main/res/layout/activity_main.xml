@@ -34,6 +34,29 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/coin_IMG_1"
+        android:layout_alignParentBottom="true"
+        android:layout_width="@dimen/coin_dimen"
+        android:layout_height="@dimen/coin_dimen"
+        app:srcCompat="@drawable/coin" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/coin_IMG_2"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_width="@dimen/coin_dimen"
+        android:layout_height="@dimen/coin_dimen"
+        app:srcCompat="@drawable/coin" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/coin_IMG_3"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="@dimen/coin_dimen"
+        android:layout_height="@dimen/coin_dimen"
+        app:srcCompat="@drawable/coin" />
+
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/asteroid_IMG_1"
         android:layout_width="@dimen/spaceship_dimen"
         android:layout_height="@dimen/spaceship_dimen"

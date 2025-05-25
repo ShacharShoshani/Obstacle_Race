@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var right_BTN: FloatingActionButton
     private lateinit var player: AppCompatImageView
     private lateinit var asteroids: Array<AppCompatImageView>
+    private lateinit var coins: Array<AppCompatImageView>
 
     private lateinit var gameManager: GameManager
     private lateinit var vibrationManager: VibrationManager
@@ -62,6 +63,11 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.asteroid_IMG_1),
             findViewById(R.id.asteroid_IMG_2),
             findViewById(R.id.asteroid_IMG_3)
+        )
+        coins = arrayOf(
+            findViewById(R.id.coin_IMG_1),
+            findViewById(R.id.coin_IMG_2),
+            findViewById(R.id.coin_IMG_3)
         )
     }
 
@@ -136,6 +142,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun refreshCoins(){
+        val offset = Constants.AsteroidHeight.STEP_OFFSET
+        for (coin in coins){
+            val layoutParams: RelativeLayout.LayoutParams =
+                RelativeLayout.LayoutParams(coin.layoutParams)
+
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+
+            if (coin.id == R.id.coin_IMG_2) {
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
+            } else if (coin.id == R.id.coin_IMG_3) {
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END)
+            }
+
+            layoutParams.bottomMargin = gameManager.asteroidHeight + offset
+
+            coin.layoutParams = layoutParams
+        }
+    }
+
     private fun refreshPlayer() {
         val layoutParams: RelativeLayout.LayoutParams =
             RelativeLayout.LayoutParams(player.layoutParams)
@@ -172,7 +198,7 @@ class MainActivity : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 gameManager.moveAsteroids()
                 refreshAsteroids()
-
+                refreshCoins()
                 checkIfPlayerCrashed()
             }
 
