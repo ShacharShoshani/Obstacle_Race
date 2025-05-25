@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var left_BTN: FloatingActionButton
     private lateinit var right_BTN: FloatingActionButton
     private lateinit var player: AppCompatImageView
+    private lateinit var coinCountLabel: TextView
     private lateinit var asteroids: Array<AppCompatImageView>
     private lateinit var coins: Array<AppCompatImageView>
 
@@ -69,6 +71,7 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.coin_IMG_2),
             findViewById(R.id.coin_IMG_3)
         )
+        coinCountLabel = findViewById(R.id.coin_count_LBL)
     }
 
     private fun initApplication() {
@@ -200,6 +203,7 @@ class MainActivity : AppCompatActivity() {
                 refreshAsteroids()
                 refreshCoins()
                 checkIfPlayerCrashed()
+                coinCountLabel.text = gameManager.coinCount.toString()
             }
 
             override fun onFinish() {

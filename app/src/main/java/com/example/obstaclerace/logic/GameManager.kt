@@ -12,6 +12,9 @@ class GameManager(private val lifeCount: Int) {
     var crashCount: Int = 0
         private set
 
+    var coinCount: Int = 500
+        private set
+
     fun movePlayer(left: Boolean = false) {
         if (left && playerColumn > Constants.PlayerPosition.MIN)
             playerColumn--
