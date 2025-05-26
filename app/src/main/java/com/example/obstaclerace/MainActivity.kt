@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var right_BTN: FloatingActionButton
     private lateinit var player: AppCompatImageView
     private lateinit var coinCountLabel: TextView
+    private lateinit var odometerLabel: TextView
     private lateinit var asteroids: Array<AppCompatImageView>
     private lateinit var coins: Array<AppCompatImageView>
 
@@ -84,6 +85,7 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.coin_IMG_3)
         )
         coinCountLabel = findViewById(R.id.coin_count_LBL)
+        odometerLabel = findViewById(R.id.odometer_LBL)
     }
 
     private fun initApplication() {
@@ -216,6 +218,7 @@ class MainActivity : AppCompatActivity() {
                 refreshCoins()
                 checkIfPlayerCrashed()
                 tryToCollectCoins()
+                odometerLabel.text = gameManager.distance.toString()
             }
 
             override fun onFinish() {
@@ -250,7 +253,7 @@ class MainActivity : AppCompatActivity() {
                 && xDiff <= Constants.PlayerCoinOverlap.HORIZONTAL_DISTANCE
             )
                 return coin
-            else{
+            else {
                 coin.isVisible = true
             }
         }

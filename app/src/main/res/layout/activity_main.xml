@@ -38,25 +38,44 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_margin="@dimen/default_margin"
-        >
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            >
+
+            <TextView
+                android:id="@+id/coin_count_LBL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/zero"
+                android:textColor="@color/score_label"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/coin_IMG_count"
+                android:layout_width="@dimen/coin_dimen"
+                android:layout_height="@dimen/coin_dimen"
+                android:layout_alignParentBottom="true"
+                app:srcCompat="@drawable/coin" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <TextView
-            android:id="@+id/coin_count_LBL"
+            android:id="@+id/odometer_LBL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:text="@string/zero"
-            android:textColor="@color/score_label"
+            android:textColor="@color/odometer"
             android:textSize="32sp"
-            android:textStyle="bold" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/coin_IMG_count"
-            android:layout_width="@dimen/coin_dimen"
-            android:layout_height="@dimen/coin_dimen"
-            android:layout_alignParentBottom="true"
-            app:srcCompat="@drawable/coin" />
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/coin_IMG_1"

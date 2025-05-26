@@ -15,6 +15,9 @@ class GameManager(private val lifeCount: Int) {
     var coinCount: Int = 0
         private set
 
+    var distance: Int = 0
+        private set
+
     fun increaseCoinCount() {
         coinCount++
     }
@@ -31,6 +34,8 @@ class GameManager(private val lifeCount: Int) {
             asteroidHeight = Constants.AsteroidHeight.MAX
         else
             asteroidHeight -= Constants.AsteroidHeight.STEP
+
+        distance += Constants.AsteroidHeight.STEP
     }
 
     fun respondToCrash() {
@@ -40,6 +45,7 @@ class GameManager(private val lifeCount: Int) {
             crashCount = 0
             coinCount = 0
             asteroidHeight = Constants.AsteroidHeight.MAX
+            distance = 0
         }
     }
 }
