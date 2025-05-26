@@ -33,10 +33,13 @@ class GameManager(private val lifeCount: Int) {
             asteroidHeight -= Constants.AsteroidHeight.STEP
     }
 
-    fun updateCrashCount() {
+    fun respondToCrash() {
         crashCount++
 
-        if (crashCount >= lifeCount)
+        if (crashCount >= lifeCount) {
             crashCount = 0
+            coinCount = 0
+            asteroidHeight = Constants.AsteroidHeight.MAX
+        }
     }
 }

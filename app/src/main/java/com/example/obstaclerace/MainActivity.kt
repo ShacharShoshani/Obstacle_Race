@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
 import androidx.core.view.updateMarginsRelative
 import com.example.obstaclerace.interfaces.TiltCallback
 import com.example.obstaclerace.logic.GameManager
@@ -273,9 +272,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun respondToCrash() {
-        gameManager.updateCrashCount()
+        gameManager.respondToCrash()
         refreshLifeCount()
-
+        coinCountLabel.text = gameManager.coinCount.toString()
         displayCrashMessage()
         vibrationManager.vibrate()
     }
