@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updateMarginsRelative
 import com.example.obstaclerace.interfaces.TiltCallback
 import com.example.obstaclerace.logic.GameManager
@@ -217,7 +218,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun tryToCollectCoins() {
         val collectedCoin = collectCoin() ?: return
-
+        collectedCoin.isVisible = false
         gameManager.increaseCoinCount()
         coinCountLabel.text = gameManager.coinCount.toString()
     }
@@ -232,13 +233,16 @@ class MainActivity : AppCompatActivity() {
             yDiff = playerPosition[1] - coinPosition[1]
             xDiff = playerPosition[0] - coinPosition[0]
 
-            if (
+            if (coin.isVisible &&
                 yDiff >= -Constants.PlayerCoinOverlap.VERTICAL_DISTANCE
                 && yDiff <= Constants.PlayerCoinOverlap.VERTICAL_DISTANCE
                 && xDiff >= -Constants.PlayerCoinOverlap.HORIZONTAL_DISTANCE
                 && xDiff <= Constants.PlayerCoinOverlap.HORIZONTAL_DISTANCE
             )
                 return coin
+            else{
+                coin.isVisible = true
+            }
         }
 
         return null
