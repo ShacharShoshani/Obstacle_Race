@@ -17,6 +17,7 @@ import com.example.obstaclerace.interfaces.TiltCallback
 import com.example.obstaclerace.logic.GameManager
 import com.example.obstaclerace.logic.VibrationManager
 import com.example.obstaclerace.utilities.Constants
+import com.example.obstaclerace.utilities.SingleSoundPlayer
 import com.example.obstaclerace.utilities.TiltDetector
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var timer: CountDownTimer
     private lateinit var toast: Toast
     private lateinit var tiltDetector: TiltDetector
+    private lateinit var singleSoundPlayer: SingleSoundPlayer
 
     private val playerPosition: IntArray = IntArray(2)
     private val asteroidPosition: IntArray = IntArray(2)
@@ -91,6 +93,7 @@ class MainActivity : AppCompatActivity() {
     private fun initApplication() {
         gameManager = GameManager(main_IMG_hearts.size)
         vibrationManager = VibrationManager(this)
+        singleSoundPlayer = SingleSoundPlayer(this)
         initViews()
         initTiltDetector()
     }
@@ -293,6 +296,7 @@ class MainActivity : AppCompatActivity() {
         refreshLifeCount()
         coinCountLabel.text = gameManager.coinCount.toString()
         displayCrashMessage()
+        singleSoundPlayer.playSound(R.raw.boom)
         vibrationManager.vibrate()
     }
 
