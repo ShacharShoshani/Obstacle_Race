@@ -54,6 +54,16 @@ class MainActivity : AppCompatActivity() {
         gameLoop()
     }
 
+    override fun onPause() {
+        super.onPause()
+        timer.cancel()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        timer.start()
+    }
+
     private fun findViews() {
         left_BTN = findViewById(R.id.left_BTN)
         right_BTN = findViewById(R.id.right_BTN)
