@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updateMarginsRelative
 import com.example.obstaclerace.interfaces.TiltCallback
 import com.example.obstaclerace.logic.GameManager
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     private val playerPosition: IntArray = IntArray(2)
     private val asteroidPosition: IntArray = IntArray(2)
+    private val coinPosition: IntArray = IntArray(2)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +89,7 @@ class MainActivity : AppCompatActivity() {
             tiltCallback = object : TiltCallback {
                 override fun tiltX() {
                     tiltDetector.tiltX.also {
-                        if(it != 0f){
+                        if (it != 0f) {
                             gameManager.movePlayer(it > 0)
                             refreshPlayer()
                         }
@@ -145,9 +147,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun refreshCoins(){
+    private fun refreshCoins() {
         val offset = Constants.AsteroidHeight.STEP_OFFSET
-        for (coin in coins){
+        for (coin in coins) {
             val layoutParams: RelativeLayout.LayoutParams =
                 RelativeLayout.LayoutParams(coin.layoutParams)
 
@@ -195,7 +197,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun gameLoop() {
-        tiltDetector.start()
+//        tiltDetector.start()
 
         timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -203,7 +205,7 @@ class MainActivity : AppCompatActivity() {
                 refreshAsteroids()
                 refreshCoins()
                 checkIfPlayerCrashed()
-                coinCountLabel.text = gameManager.coinCount.toString()
+                tryToCollectCoins()
             }
 
             override fun onFinish() {
@@ -212,6 +214,35 @@ class MainActivity : AppCompatActivity() {
 
         }
         timer.start()
+    }
+
+    private fun tryToCollectCoins() {
+        val collectedCoin = collectCoin() ?: return
+
+        gameManager.increaseCoinCount()
+        coinCountLabel.text = gameManager.coinCount.toString()
+    }
+
+    private fun collectCoin(): AppCompatImageView? {
+        var yDiff: Int
+        var xDiff: Int
+
+        for (coin in coins) {
+            player.getLocationOnScreen(playerPosition)
+            coin.getLocationOnScreen(coinPosition)
+            yDiff = playerPosition[1] - coinPosition[1]
+            xDiff = playerPosition[0] - coinPosition[0]
+
+            if (
+                yDiff >= -Constants.PlayerCoinOverlap.VERTICAL_DISTANCE
+                && yDiff <= Constants.PlayerCoinOverlap.VERTICAL_DISTANCE
+                && xDiff >= -Constants.PlayerCoinOverlap.HORIZONTAL_DISTANCE
+                && xDiff <= Constants.PlayerCoinOverlap.HORIZONTAL_DISTANCE
+            )
+                return coin
+        }
+
+        return null
     }
 
     private fun checkIfPlayerCrashed() {

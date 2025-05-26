@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:text="@string/hello"
+            android:text="@string/zero"
             android:textColor="@color/score_label"
             android:textSize="32sp"
             android:textStyle="bold" />

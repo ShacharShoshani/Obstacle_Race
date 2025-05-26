@@ -18,6 +18,11 @@ class Constants {
         const val VERTICAL_DISTANCE = 200
     }
 
+    object PlayerCoinOverlap {
+        const val VERTICAL_DISTANCE = 100
+        const val HORIZONTAL_DISTANCE = 100
+    }
+
     object Toast {
         const val CRASH_MESSAGE = "The spaceship hit an asteroid!"
         const val GAME_OVER = "Game Over. Restarting"
