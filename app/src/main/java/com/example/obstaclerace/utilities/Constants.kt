@@ -4,7 +4,7 @@ class Constants {
     object PlayerPosition {
         const val MIN = 0
         const val DEFAULT = 1
-        const val MAX = 2
+        const val MAX = 4
     }
 
     object AsteroidHeight {

@@ -79,7 +79,10 @@ class MainActivity : AppCompatActivity() {
         asteroids = arrayOf(
             findViewById(R.id.asteroid_IMG_1),
             findViewById(R.id.asteroid_IMG_2),
-            findViewById(R.id.asteroid_IMG_3)
+            findViewById(R.id.asteroid_IMG_3),
+            findViewById(R.id.asteroid_IMG_4),
+            findViewById(R.id.asteroid_IMG_5)
+
         )
         coins = arrayOf(
             findViewById(R.id.coin_IMG_1),
@@ -140,25 +143,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshAsteroids() {
-        var offset = 0
-
-        for (asteroid in asteroids) {
+        for(i in asteroids.indices){
             val layoutParams: RelativeLayout.LayoutParams =
-                RelativeLayout.LayoutParams(asteroid.layoutParams)
+                RelativeLayout.LayoutParams(asteroids[i].layoutParams)
 
+            layoutParams.marginStart = getMarginStart(i)
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+            layoutParams.bottomMargin = gameManager.asteroidHeight - Constants.AsteroidHeight.STEP_OFFSET * ((i + 1) % 2)
 
-            if (asteroid.id == R.id.asteroid_IMG_2) {
-                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
-                offset = Constants.AsteroidHeight.STEP_OFFSET
-            } else if (asteroid.id == R.id.asteroid_IMG_3) {
-                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END)
-                offset = Constants.AsteroidHeight.STEP_OFFSET * 2
-            }
-
-            layoutParams.bottomMargin = gameManager.asteroidHeight - offset
-
-            asteroid.layoutParams = layoutParams
+            asteroids[i].layoutParams = layoutParams
         }
     }
 
@@ -186,29 +179,16 @@ class MainActivity : AppCompatActivity() {
         val layoutParams: RelativeLayout.LayoutParams =
             RelativeLayout.LayoutParams(player.layoutParams)
 
-        when (gameManager.playerColumn) {
-            0 -> {
-                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_START)
-                layoutParams.removeRule(RelativeLayout.CENTER_IN_PARENT)
-                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_END)
-            }
-
-            1 -> {
-                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
-                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_START)
-                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_END)
-            }
-
-            else -> {
-                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_END)
-                layoutParams.removeRule(RelativeLayout.CENTER_IN_PARENT)
-                layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_START)
-            }
-        }
+        layoutParams.marginStart = getMarginStart(gameManager.playerColumn)
 
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
         layoutParams.updateMarginsRelative(bottom = 250)
         player.layoutParams = layoutParams
+    }
+
+    private fun getMarginStart(offsetFactor: Int): Int {
+        return resources.getDimensionPixelSize(R.dimen.game_item_margin_start) +
+                offsetFactor * resources.getDimensionPixelSize(R.dimen.game_item_margin_offset)
     }
 
     private fun gameLoop() {
