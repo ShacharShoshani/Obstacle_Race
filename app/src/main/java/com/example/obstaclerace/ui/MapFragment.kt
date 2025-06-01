@@ -50,6 +50,6 @@ class MapFragment : Fragment() {
     fun zoom(lat: Double = 0.0, lon: Double = 0.0, title: String = "Hello World") {
         val location = LatLng(lat, lon)
         mapClient.addMarker(MarkerOptions().position(location).title(title))
-        mapClient.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+        mapClient.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12f))
     }
 }
