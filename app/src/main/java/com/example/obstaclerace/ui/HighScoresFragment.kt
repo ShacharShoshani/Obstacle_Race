@@ -1,30 +1,25 @@
 package com.example.obstaclerace.ui
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.example.obstaclerace.R
 import com.example.obstaclerace.interfaces.Callback_HighScoreClicked
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.example.obstaclerace.interfaces.LocationCallback
+import com.example.obstaclerace.utilities.MyLocationService
 
 
 class HighScoresFragment : Fragment() {
-
-
     private lateinit var highScores_ET_text: TextInputEditText
 
     private lateinit var highScores_BTN_send: MaterialButton
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var myLocationService: MyLocationService
 
     var highScoreItemClicked: Callback_HighScoreClicked? = null
 
@@ -40,30 +35,27 @@ class HighScoresFragment : Fragment() {
     }
 
     private fun initLocation() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireContext())
+        myLocationService = MyLocationService(this.requireContext())
 
-        if (ActivityCompat.checkSelfPermission(
-                this.requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this.requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            highScores_ET_text.setText(buildString {
-                append(0)
-                append(',')
-                append(0)
-            })
+        myLocationService.locationCallback = object : LocationCallback {
+            override fun locationFailure(exception: Exception?) {
+                highScores_ET_text.setText(buildString {
+                    append(0)
+                    append(',')
+                    append(0)
+                })
+            }
+
+            override fun locationSuccess(location: Location?) {
+                highScores_ET_text.setText(buildString {
+                    append(location?.latitude)
+                    append(',')
+                    append(location?.longitude)
+                })
+            }
         }
 
-        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-            highScores_ET_text.setText(buildString {
-                append(location?.latitude)
-                append(',')
-                append(location?.longitude)
-            })
-        }
+        myLocationService.lastLocation()
     }
 
     private fun initViews() {
