@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr"
+    tools:context=".MainMenu">
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/game_mode_SWITCH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/init_game_BTN"
+        android:layout_width="@dimen/main_menu_width"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/btn_start_game"
+        android:textSize="@dimen/default_string_size" />
+</RelativeLayout>

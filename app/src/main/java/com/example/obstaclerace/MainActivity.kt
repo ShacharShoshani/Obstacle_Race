@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
     private val asteroidPosition: IntArray = IntArray(2)
     private val coinPosition: IntArray = IntArray(2)
 
+    private var isInButtonsMode: Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -97,8 +99,11 @@ class MainActivity : AppCompatActivity() {
         gameManager = GameManager(main_IMG_hearts.size)
         vibrationManager = VibrationManager(this)
         singleSoundPlayer = SingleSoundPlayer(this)
+        isInButtonsMode = intent.getBooleanExtra(R.string.param_useButtons.toString(), false)
         initViews()
-        initTiltDetector()
+
+        if (!isInButtonsMode)
+            initTiltDetector()
     }
 
     private fun initTiltDetector() {
@@ -122,10 +127,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        left_BTN.setOnClickListener { _: View -> moveClick(true) }
-        right_BTN.setOnClickListener { _: View -> moveClick() }
+        if (isInButtonsMode) {
+            left_BTN.setOnClickListener { _: View -> moveClick(true) }
+            right_BTN.setOnClickListener { _: View -> moveClick() }
+        }else{
+            disableButton(left_BTN)
+            disableButton(right_BTN)
+        }
+
         toast = Toast(this)
         toast.duration = Toast.LENGTH_LONG
+    }
+
+    private fun disableButton(button: FloatingActionButton) {
+        button.isVisible = false
+        button.isClickable = false
     }
 
     private fun moveClick(left: Boolean = false) {
@@ -143,13 +159,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshAsteroids() {
-        for(i in asteroids.indices){
+        for (i in asteroids.indices) {
             val layoutParams: RelativeLayout.LayoutParams =
                 RelativeLayout.LayoutParams(asteroids[i].layoutParams)
 
             layoutParams.marginStart = getMarginStart(i)
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-            layoutParams.bottomMargin = gameManager.asteroidHeight - Constants.AsteroidHeight.STEP_OFFSET * ((i + 1) % 2)
+            layoutParams.bottomMargin =
+                gameManager.asteroidHeight - Constants.AsteroidHeight.STEP_OFFSET * ((i + 1) % 2)
 
             asteroids[i].layoutParams = layoutParams
         }
@@ -192,7 +209,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun gameLoop() {
-//        tiltDetector.start()
+        if (!isInButtonsMode)
+            tiltDetector.start()
 
         timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
