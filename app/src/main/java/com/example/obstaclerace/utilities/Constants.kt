@@ -3,7 +3,7 @@ package com.example.obstaclerace.utilities
 class Constants {
     object PlayerPosition {
         const val MIN = 0
-        const val DEFAULT = 1
+        const val DEFAULT = 0
         const val MAX = 4
     }
 
