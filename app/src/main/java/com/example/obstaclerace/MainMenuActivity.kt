@@ -1,10 +1,12 @@
 package com.example.obstaclerace
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.ViewCompat
@@ -27,6 +29,7 @@ class MainMenuActivity : AppCompatActivity() {
 
         findViews()
         initViews()
+        requestPermissions()
     }
 
     private fun findViews() {
@@ -51,5 +54,31 @@ class MainMenuActivity : AppCompatActivity() {
             putExtra(R.string.param_useButtons.toString(), game_mode_SWITCH.isChecked)
             startActivity(this)
         }
+    }
+
+    private fun requestPermissions() {
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                    // Precise location access granted.
+                }
+
+                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                    // Only approximate location access granted.
+                }
+
+                else -> {
+                    // No location access granted.
+                }
+            }
+        }
+        locationPermissionRequest.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
     }
 }

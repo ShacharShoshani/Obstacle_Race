@@ -17,7 +17,7 @@ import com.example.obstaclerace.R
 
 class MapFragment : Fragment() {
 
-    private lateinit var mapClient: GoogleMap
+    private var mapClient: GoogleMap? = null
 
     private val callback = OnMapReadyCallback { googleMap: GoogleMap ->
         /**
@@ -49,7 +49,7 @@ class MapFragment : Fragment() {
 
     fun zoom(lat: Double = 0.0, lon: Double = 0.0, title: String = "Hello World") {
         val location = LatLng(lat, lon)
-        mapClient.addMarker(MarkerOptions().position(location).title(title))
-        mapClient.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12f))
+        mapClient?.addMarker(MarkerOptions().position(location).title(title))
+        mapClient?.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12f))
     }
 }
