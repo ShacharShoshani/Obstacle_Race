@@ -6,6 +6,7 @@
     <dimen name="spaceship_dimen">50dp</dimen>
     <dimen name="coin_dimen">50dp</dimen>
     <dimen name="default_string_size">32sp</dimen>
+    <dimen name="small_string_size">20sp</dimen>
     <dimen name="heart_margin">10dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="spaceship_bottom_margin">95dp</dimen>
