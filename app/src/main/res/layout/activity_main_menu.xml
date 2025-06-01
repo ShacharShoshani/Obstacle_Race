@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="ltr"
-    tools:context=".MainMenu">
+    tools:context=".MainMenuActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginBottom="30dp">
+            android:layout_marginBottom="@dimen/menu_item_margin_bottom">
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/game_mode_SWITCH"
@@ -39,7 +39,16 @@
             android:layout_width="@dimen/main_menu_width"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_marginBottom="@dimen/menu_item_margin_bottom"
             android:text="@string/btn_start_game"
+            android:textSize="@dimen/default_string_size" />
+
+        <Button
+            android:id="@+id/display_records_BTN"
+            android:layout_width="@dimen/main_menu_width"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/display_records"
             android:textSize="@dimen/default_string_size" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 

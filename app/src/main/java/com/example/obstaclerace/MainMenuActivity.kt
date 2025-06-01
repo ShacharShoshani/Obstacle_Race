@@ -10,9 +10,10 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class MainMenu : AppCompatActivity() {
-    private lateinit var init_game_BTN: Button
+class MainMenuActivity : AppCompatActivity() {
     private lateinit var game_mode_SWITCH: SwitchCompat
+    private lateinit var init_game_BTN: Button
+    private lateinit var display_records_BTN: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,15 +32,24 @@ class MainMenu : AppCompatActivity() {
     private fun findViews() {
         init_game_BTN = findViewById(R.id.init_game_BTN)
         game_mode_SWITCH = findViewById(R.id.game_mode_SWITCH)
+        display_records_BTN = findViewById(R.id.display_records_BTN)
     }
 
     private fun initViews() {
         init_game_BTN.setOnClickListener { _: View -> initGame() }
+        display_records_BTN.setOnClickListener { _: View -> displayRecords() }
+    }
+
+    private fun displayRecords() {
+        Intent(this, RecordsActivity::class.java).apply {
+            startActivity(this)
+        }
     }
 
     private fun initGame() {
-        startActivity(Intent(this, MainActivity::class.java).apply {
+        Intent(this, MainActivity::class.java).apply {
             putExtra(R.string.param_useButtons.toString(), game_mode_SWITCH.isChecked)
-        })
+            startActivity(this)
+        }
     }
 }
