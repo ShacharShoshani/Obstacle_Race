@@ -27,4 +27,9 @@ class Constants {
         const val CRASH_MESSAGE = "The spaceship hit an asteroid!"
         const val GAME_OVER = "Game Over. Restarting"
     }
+
+    object GameMode {
+        const val BUTTONS = "BUTTONS"
+        const val TILT = "TILT"
+    }
 }

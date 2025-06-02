@@ -12,10 +12,10 @@ class GameManager(private val lifeCount: Int) {
     var crashCount: Int = 0
         private set
 
-    var coinCount: Int = 0
+    var coinCount: Long = 0
         private set
 
-    var distance: Int = 0
+    var distance: Long = 0
         private set
 
     fun increaseCoinCount() {
