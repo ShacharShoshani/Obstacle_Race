@@ -32,4 +32,8 @@ class Constants {
         const val BUTTONS = "BUTTONS"
         const val TILT = "TILT"
     }
+
+    object GameRecords {
+        const val TOP_COUNT = 10
+    }
 }

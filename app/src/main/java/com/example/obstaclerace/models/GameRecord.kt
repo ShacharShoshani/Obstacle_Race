@@ -1,9 +1,5 @@
 package com.example.obstaclerace.models
 
-import com.google.android.gms.maps.model.LatLng
-import java.time.Instant
-import java.time.LocalDate
-
 data class GameRecord private constructor(
     val coins: Long,
     val distance: Long,
