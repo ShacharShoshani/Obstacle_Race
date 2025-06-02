@@ -4,7 +4,7 @@
     <string name="right">Right</string>
     <string name="zero">0</string>
     <string name="btn_start_game">Start Game</string>
-    <string name="param_useButtons">useButtons</string>
+    <string name="param_gameMode">gameMode</string>
     <string name="use_buttons_lbl">Buttons Mode</string>
     <string name="display_records">Display Records</string>
     <!-- TODO: Remove or change this placeholder text -->

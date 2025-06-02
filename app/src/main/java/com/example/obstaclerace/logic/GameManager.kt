@@ -38,7 +38,10 @@ class GameManager(private val lifeCount: Int) {
         distance += Constants.AsteroidHeight.STEP
     }
 
-    fun respondToCrash() {
+    /**
+     * Return true if the player lost
+     */
+    fun respondToCrash(): Boolean {
         crashCount++
 
         if (crashCount >= lifeCount) {
@@ -46,6 +49,9 @@ class GameManager(private val lifeCount: Int) {
             coinCount = 0
             asteroidHeight = Constants.AsteroidHeight.MAX
             distance = 0
+
+            return true
         }
+        return false
     }
 }

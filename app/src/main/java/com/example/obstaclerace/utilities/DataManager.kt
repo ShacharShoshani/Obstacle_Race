@@ -22,8 +22,12 @@ class DataManager private constructor() {
     }
 
     fun getTopRecords(): List<GameRecord> {
-        return gameRecords.toSortedSet(compareBy { it.coins }).toList()
-            .subList(0, Constants.GameRecords.TOP_COUNT)
+        val list = gameRecords.toSortedSet(compareBy { it.coins }).toList()
+
+        if (list.isEmpty() || list.size < Constants.GameRecords.TOP_COUNT)
+            return list
+
+        return list.subList(0, Constants.GameRecords.TOP_COUNT)
     }
 
     fun addGameRecord(record: GameRecord) {

@@ -1,9 +1,11 @@
 package com.example.obstaclerace.models
 
+import com.example.obstaclerace.utilities.Constants
+
 data class GameRecord private constructor(
     val coins: Long,
     val distance: Long,
-    val gameMode: String,
+    val gameMode: String?,
     val locationLat: Double,
     val locationLon: Double,
     val timestamp: Long
@@ -12,14 +14,14 @@ data class GameRecord private constructor(
     class Builder(
         var coins: Long = 0L,
         var distance: Long = 0L,
-        var gameMode: String = "",
-        var locationLat: Double = 0.0,
-        var locationLon: Double = 0.0,
+        var gameMode: String? = null,
+        var locationLat: Double = Constants.LocationDefault.LATITUDE,
+        var locationLon: Double = Constants.LocationDefault.LONGITUDE,
         var timestamp: Long = 0L
     ) {
         fun coins(coins: Long) = apply { this.coins = coins }
         fun distance(distance: Long) = apply { this.distance = distance }
-        fun gameMode(gameMode: String) = apply { this.gameMode = gameMode }
+        fun gameMode(gameMode: String?) = apply { this.gameMode = gameMode }
         fun locationLat(locationLat: Double) = apply { this.locationLat = locationLat }
         fun locationLon(locationLon: Double) = apply { this.locationLon = locationLon }
         fun timestamp(timestamp: Long) = apply { this.timestamp = timestamp }

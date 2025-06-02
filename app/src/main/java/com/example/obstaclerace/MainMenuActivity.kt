@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.obstaclerace.utilities.Constants
+import com.example.obstaclerace.utilities.DataManager
 import com.example.obstaclerace.utilities.SignalManager
 
 class MainMenuActivity : AppCompatActivity() {
@@ -32,6 +34,7 @@ class MainMenuActivity : AppCompatActivity() {
         initViews()
         requestPermissions()
         SignalManager.init(this)
+        DataManager.init()
     }
 
     private fun findViews() {
@@ -53,7 +56,11 @@ class MainMenuActivity : AppCompatActivity() {
 
     private fun initGame() {
         Intent(this, MainActivity::class.java).apply {
-            putExtra(R.string.param_useButtons.toString(), game_mode_SWITCH.isChecked)
+            val gameMode = if (game_mode_SWITCH.isChecked)
+                Constants.GameMode.BUTTONS
+            else Constants.GameMode.TILT
+
+            putExtra(R.string.param_gameMode.toString(), gameMode)
             startActivity(this)
         }
     }

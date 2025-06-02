@@ -1,6 +1,5 @@
 package com.example.obstaclerace.ui
 
-import android.location.Location
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,16 +9,14 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.example.obstaclerace.R
 import com.example.obstaclerace.interfaces.Callback_HighScoreClicked
-import com.example.obstaclerace.interfaces.LocationCallback
-import com.example.obstaclerace.utilities.MyLocationService
+import com.example.obstaclerace.utilities.Constants
+import com.example.obstaclerace.utilities.DataManager
 
 
 class HighScoresFragment : Fragment() {
     private lateinit var highScores_ET_text: TextInputEditText
 
     private lateinit var highScores_BTN_send: MaterialButton
-
-    private lateinit var myLocationService: MyLocationService
 
     var highScoreItemClicked: Callback_HighScoreClicked? = null
 
@@ -35,27 +32,20 @@ class HighScoresFragment : Fragment() {
     }
 
     private fun initLocation() {
-        myLocationService = MyLocationService(this.requireContext())
+        val topRecordsList = DataManager.getInstance().getTopRecords()
 
-        myLocationService.locationCallback = object : LocationCallback {
-            override fun locationFailure(exception: Exception?) {
-                highScores_ET_text.setText(buildString {
-                    append(0)
-                    append(',')
-                    append(0)
-                })
-            }
-
-            override fun locationSuccess(location: Location?) {
-                highScores_ET_text.setText(buildString {
-                    append(location?.latitude)
-                    append(',')
-                    append(location?.longitude)
-                })
-            }
-        }
-
-        myLocationService.lastLocation()
+        if (topRecordsList.isEmpty())
+            highScores_ET_text.setText(buildString {
+                append(0)
+                append(',')
+                append(0)
+            })
+        else
+            highScores_ET_text.setText(buildString {
+                append(topRecordsList[0].locationLat)
+                append(',')
+                append(topRecordsList[0].locationLon)
+            })
     }
 
     private fun initViews() {
@@ -66,8 +56,10 @@ class HighScoresFragment : Fragment() {
 
     private fun goToCoordinates() {
         val coordinates = highScores_ET_text.text?.split(",")
-        val lat: Double = coordinates?.getOrNull(0)?.toDoubleOrNull() ?: 0.0
-        val lon: Double = coordinates?.getOrNull(1)?.toDoubleOrNull() ?: 0.0
+        val lat: Double =
+            coordinates?.getOrNull(0)?.toDoubleOrNull() ?: Constants.LocationDefault.LATITUDE
+        val lon: Double =
+            coordinates?.getOrNull(1)?.toDoubleOrNull() ?: Constants.LocationDefault.LONGITUDE
 
         itemClicked(lat, lon)
     }

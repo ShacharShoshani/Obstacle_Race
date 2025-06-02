@@ -14,6 +14,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.obstaclerace.R
+import com.example.obstaclerace.utilities.Constants
 
 class MapFragment : Fragment() {
 
@@ -47,7 +48,11 @@ class MapFragment : Fragment() {
         mapFragment?.getMapAsync(callback)
     }
 
-    fun zoom(lat: Double = 0.0, lon: Double = 0.0, title: String = "Hello World") {
+    fun zoom(
+        lat: Double = Constants.LocationDefault.LATITUDE,
+        lon: Double = Constants.LocationDefault.LONGITUDE,
+        title: String = "Hello World"
+    ) {
         val location = LatLng(lat, lon)
         mapClient?.addMarker(MarkerOptions().position(location).title(title))
         mapClient?.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12f))

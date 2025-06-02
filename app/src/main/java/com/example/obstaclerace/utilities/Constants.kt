@@ -26,6 +26,8 @@ class Constants {
     object Toast {
         const val CRASH_MESSAGE = "The spaceship hit an asteroid!"
         const val GAME_OVER = "Game Over. Restarting"
+        const val SAVING_RECORD = "Saving new record..."
+        const val RECORD_SAVED_SUCCESS = "Record saved successfully."
     }
 
     object GameMode {
@@ -35,5 +37,10 @@ class Constants {
 
     object GameRecords {
         const val TOP_COUNT = 10
+    }
+
+    object LocationDefault {
+        const val LONGITUDE = 0.0
+        const val LATITUDE = 0.0
     }
 }

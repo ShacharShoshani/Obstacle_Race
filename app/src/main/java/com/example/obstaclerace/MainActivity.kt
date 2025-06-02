@@ -1,5 +1,6 @@
 package com.example.obstaclerace
 
+import android.location.Location
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
@@ -12,13 +13,18 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateMarginsRelative
+import com.example.obstaclerace.interfaces.LocationCallback
 import com.example.obstaclerace.interfaces.TiltCallback
 import com.example.obstaclerace.logic.GameManager
+import com.example.obstaclerace.models.GameRecord
 import com.example.obstaclerace.utilities.Constants
+import com.example.obstaclerace.utilities.DataManager
+import com.example.obstaclerace.utilities.MyLocationService
 import com.example.obstaclerace.utilities.SignalManager
 import com.example.obstaclerace.utilities.SingleSoundPlayer
 import com.example.obstaclerace.utilities.TiltDetector
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.time.Instant
 
 class MainActivity : AppCompatActivity() {
     private lateinit var main_IMG_hearts: Array<AppCompatImageView>
@@ -34,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var timer: CountDownTimer
     private lateinit var tiltDetector: TiltDetector
     private lateinit var singleSoundPlayer: SingleSoundPlayer
+    private lateinit var locationService: MyLocationService
 
     private val playerPosition: IntArray = IntArray(2)
     private val asteroidPosition: IntArray = IntArray(2)
@@ -96,11 +103,30 @@ class MainActivity : AppCompatActivity() {
     private fun initApplication() {
         gameManager = GameManager(main_IMG_hearts.size)
         singleSoundPlayer = SingleSoundPlayer(this)
-        isInButtonsMode = intent.getBooleanExtra(R.string.param_useButtons.toString(), false)
+        isInButtonsMode =
+            intent.getStringExtra(R.string.param_gameMode.toString()) == Constants.GameMode.BUTTONS
         initViews()
 
         if (!isInButtonsMode)
             initTiltDetector()
+
+        locationService = MyLocationService(this)
+        locationService.locationCallback = object : LocationCallback {
+            override fun locationSuccess(location: Location?) {
+                if (location == null)
+                    addGameRecord(
+                        Constants.LocationDefault.LATITUDE,
+                        Constants.LocationDefault.LONGITUDE
+                    )
+                else
+                    addGameRecord(location.latitude, location.longitude)
+            }
+
+            override fun locationFailure(exception: Exception?) {
+                throw Exception(exception)
+            }
+
+        }
     }
 
     private fun initTiltDetector() {
@@ -284,12 +310,41 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun respondToCrash() {
-        gameManager.respondToCrash()
+        val lost = gameManager.respondToCrash()
+        if (lost) {
+            gameOver()
+        }
+
         refreshLifeCount()
         coinCountLabel.text = gameManager.coinCount.toString()
         displayCrashMessage()
         singleSoundPlayer.playSound(R.raw.boom)
         signalManager.vibrate()
+    }
+
+    private fun gameOver() {
+        timer.cancel()
+        refreshAsteroids()
+        refreshCoins()
+        locationService.lastLocation()
+    }
+
+    private fun addGameRecord(lat: Double, lon: Double) {
+        signalManager.toast(Constants.Toast.SAVING_RECORD)
+
+        val record =
+            GameRecord
+                .Builder()
+                .gameMode(intent.getStringExtra(R.string.param_gameMode.toString()))
+                .coins(gameManager.coinCount)
+                .distance(gameManager.distance)
+                .locationLat(lat)
+                .locationLon(lon)
+                .timestamp(Instant.now().epochSecond)
+                .build()
+
+        DataManager.getInstance().addGameRecord(record)
+        signalManager.toast(Constants.Toast.RECORD_SAVED_SUCCESS)
     }
 
     private fun displayCrashMessage() {
