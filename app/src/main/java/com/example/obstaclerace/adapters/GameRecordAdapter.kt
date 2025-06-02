@@ -3,6 +3,7 @@ package com.example.obstaclerace.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textview.MaterialTextView
 import com.example.obstaclerace.databinding.GameRecordItemBinding
 import com.example.obstaclerace.interfaces.GameRecordCallback
 import com.example.obstaclerace.models.GameRecord
@@ -24,11 +25,20 @@ class GameRecordAdapter(private val records: List<GameRecord>) :
     override fun onBindViewHolder(holder: RecordViewHolder, position: Int) {
         with(holder) {
             with(records[position]) {
-                binding.recordLBLCoins.text = coins.toString()
-                binding.recordLBLDate.text = Date(Timestamp(timestamp).time).toString()
-                binding.recordLBLMode.text = gameMode
-                binding.recordLBLDistance.text = distance.toString()
+                setLabelText(binding.recordLBLCoins, coins.toString())
+                setLabelText(binding.recordLBLDate, Date(Timestamp(timestamp).time).toString())
+                setLabelText(binding.recordLBLMode, gameMode)
+                setLabelText(binding.recordLBLDistance, distance.toString())
             }
+        }
+    }
+
+    private fun setLabelText(label: MaterialTextView, data: String? = "") {
+        val title = label.text.split(":")[0]
+        label.text = buildString {
+            append(title)
+            append(":     ")
+            append(data)
         }
     }
 
@@ -39,10 +49,10 @@ class GameRecordAdapter(private val records: List<GameRecord>) :
     inner class RecordViewHolder(val binding: GameRecordItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.recordLBLCoins.setOnClickListener({
+            binding.displayLocationBTN.setOnClickListener {
                 val item = records[adapterPosition]
                 gameRecordCallback?.itemClicked(item, adapterPosition)
-            })
+            }
         }
     }
 }
