@@ -345,6 +345,7 @@ class MainActivity : AppCompatActivity() {
 
         DataManager.getInstance().addGameRecord(record)
         signalManager.toast(Constants.Toast.RECORD_SAVED_SUCCESS)
+        gameManager.reset()
     }
 
     private fun displayCrashMessage() {

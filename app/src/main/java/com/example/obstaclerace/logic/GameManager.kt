@@ -44,14 +44,13 @@ class GameManager(private val lifeCount: Int) {
     fun respondToCrash(): Boolean {
         crashCount++
 
-        if (crashCount >= lifeCount) {
-            crashCount = 0
-            coinCount = 0
-            asteroidHeight = Constants.AsteroidHeight.MAX
-            distance = 0
+        return crashCount >= lifeCount
+    }
 
-            return true
-        }
-        return false
+    fun reset() {
+        crashCount = 0
+        coinCount = 0
+        asteroidHeight = Constants.AsteroidHeight.MAX
+        distance = 0
     }
 }
