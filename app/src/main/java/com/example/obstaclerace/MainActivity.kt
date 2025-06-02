@@ -340,7 +340,7 @@ class MainActivity : AppCompatActivity() {
                 .distance(gameManager.distance)
                 .locationLat(lat)
                 .locationLon(lon)
-                .timestamp(Instant.now().epochSecond)
+                .timestamp(Instant.now().toEpochMilli())
                 .build()
 
         DataManager.getInstance().addGameRecord(record)

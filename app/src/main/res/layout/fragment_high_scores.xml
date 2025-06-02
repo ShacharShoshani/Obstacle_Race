@@ -6,23 +6,18 @@
     android:background="@color/red"
     tools:context=".ui.HighScoresFragment">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/highScores_ET_text"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:inputType="text"
-        android:gravity="center"
-        android:hint="@string/please_enter_location" />
+        android:orientation="vertical">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/highScores_BTN_send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/send"
-        android:layout_below="@id/highScores_ET_text"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/default_margin"
-        />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/top_records_RV_headers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:itemCount="11"
+            tools:listitem="@layout/game_record_item" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 </RelativeLayout>

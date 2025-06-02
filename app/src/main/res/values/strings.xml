@@ -11,4 +11,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="please_enter_location">Please Enter Location</string>
     <string name="send">Send</string>
+    <string name="records_col_coins">Coins</string>
+    <string name="records_col_distance">Distance</string>
+    <string name="records_col_mode">Mode</string>
+    <string name="records_col_date">Date</string>
 </resources>
