@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/top_records_RV_headers"
+            android:id="@+id/top_records_RV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:itemCount="11"
