@@ -5,7 +5,6 @@ import android.os.CountDownTimer
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
@@ -15,8 +14,8 @@ import androidx.core.view.isVisible
 import androidx.core.view.updateMarginsRelative
 import com.example.obstaclerace.interfaces.TiltCallback
 import com.example.obstaclerace.logic.GameManager
-import com.example.obstaclerace.logic.VibrationManager
 import com.example.obstaclerace.utilities.Constants
+import com.example.obstaclerace.utilities.SignalManager
 import com.example.obstaclerace.utilities.SingleSoundPlayer
 import com.example.obstaclerace.utilities.TiltDetector
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -32,9 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var coins: Array<AppCompatImageView>
 
     private lateinit var gameManager: GameManager
-    private lateinit var vibrationManager: VibrationManager
     private lateinit var timer: CountDownTimer
-    private lateinit var toast: Toast
     private lateinit var tiltDetector: TiltDetector
     private lateinit var singleSoundPlayer: SingleSoundPlayer
 
@@ -43,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private val coinPosition: IntArray = IntArray(2)
 
     private var isInButtonsMode: Boolean = true
+    private var signalManager = SignalManager.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,7 +95,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initApplication() {
         gameManager = GameManager(main_IMG_hearts.size)
-        vibrationManager = VibrationManager(this)
         singleSoundPlayer = SingleSoundPlayer(this)
         isInButtonsMode = intent.getBooleanExtra(R.string.param_useButtons.toString(), false)
         initViews()
@@ -130,13 +127,10 @@ class MainActivity : AppCompatActivity() {
         if (isInButtonsMode) {
             left_BTN.setOnClickListener { _: View -> moveClick(true) }
             right_BTN.setOnClickListener { _: View -> moveClick() }
-        }else{
+        } else {
             disableButton(left_BTN)
             disableButton(right_BTN)
         }
-
-        toast = Toast(this)
-        toast.duration = Toast.LENGTH_LONG
     }
 
     private fun disableButton(button: FloatingActionButton) {
@@ -295,7 +289,7 @@ class MainActivity : AppCompatActivity() {
         coinCountLabel.text = gameManager.coinCount.toString()
         displayCrashMessage()
         singleSoundPlayer.playSound(R.raw.boom)
-        vibrationManager.vibrate()
+        signalManager.vibrate()
     }
 
     private fun displayCrashMessage() {
@@ -304,8 +298,6 @@ class MainActivity : AppCompatActivity() {
                 Constants.Toast.CRASH_MESSAGE
             else Constants.Toast.GAME_OVER
 
-        toast.cancel()
-        toast.setText(text)
-        toast.show()
+        signalManager.toast(text)
     }
 }

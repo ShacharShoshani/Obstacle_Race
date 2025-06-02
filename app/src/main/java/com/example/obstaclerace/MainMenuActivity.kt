@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.obstaclerace.utilities.SignalManager
 
 class MainMenuActivity : AppCompatActivity() {
     private lateinit var game_mode_SWITCH: SwitchCompat
@@ -30,6 +31,7 @@ class MainMenuActivity : AppCompatActivity() {
         findViews()
         initViews()
         requestPermissions()
+        SignalManager.init(this)
     }
 
     private fun findViews() {
