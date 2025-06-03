@@ -23,7 +23,8 @@ class DataManager private constructor() {
     }
 
     fun getTopRecords(): List<GameRecord> {
-        val list = gameRecords.toSortedSet(compareBy { (it.coins * gameModeFactor(it)) }).toList()
+        val list =
+            gameRecords.toSortedSet(compareBy { (it.coins * gameModeFactor(it) * -1) }).toList()
 
         if (list.isEmpty() || list.size < Constants.GameRecords.TOP_COUNT)
             return list
