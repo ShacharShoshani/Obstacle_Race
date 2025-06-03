@@ -43,4 +43,12 @@ class Constants {
         const val LONGITUDE = 0.0
         const val LATITUDE = 0.0
     }
+
+    object SPKeys {
+        const val GAME_RECORDS_KEY = "GAME_RECORDS_KEY"
+    }
+
+    object SPDefaultValues {
+        const val GAME_RECORDS_DEFAULT = "[]"
+    }
 }

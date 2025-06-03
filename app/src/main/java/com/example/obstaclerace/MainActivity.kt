@@ -67,11 +67,17 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         timer.cancel()
+        DataManager.getInstance().exportToDisk()
     }
 
     override fun onRestart() {
         super.onRestart()
         timer.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        DataManager.getInstance().exportToDisk()
     }
 
     private fun findViews() {

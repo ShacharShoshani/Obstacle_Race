@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.obstaclerace.utilities.Constants
 import com.example.obstaclerace.utilities.DataManager
+import com.example.obstaclerace.utilities.SharedPreferencesManager
 import com.example.obstaclerace.utilities.SignalManager
 
 class MainMenuActivity : AppCompatActivity() {
@@ -34,7 +35,14 @@ class MainMenuActivity : AppCompatActivity() {
         initViews()
         requestPermissions()
         SignalManager.init(this)
+        SharedPreferencesManager.init(this)
         DataManager.init()
+        DataManager.getInstance().loadFromDisk()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        DataManager.getInstance().exportToDisk()
     }
 
     private fun findViews() {
