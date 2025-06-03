@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var gameManager: GameManager
     private lateinit var timer: CountDownTimer
-    private lateinit var tiltDetector: TiltDetector
     private lateinit var singleSoundPlayer: SingleSoundPlayer
     private lateinit var locationService: MyLocationService
 
@@ -48,6 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     private var isInButtonsMode: Boolean = true
     private var signalManager = SignalManager.getInstance()
+    private var tiltDetector: TiltDetector? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,21 +111,30 @@ class MainActivity : AppCompatActivity() {
         singleSoundPlayer = SingleSoundPlayer(this)
         isInButtonsMode =
             intent.getStringExtra(R.string.param_gameMode.toString()) == Constants.GameMode.BUTTONS
+
         initViews()
 
         if (!isInButtonsMode)
             initTiltDetector()
 
+        initLocationService()
+    }
+
+    private fun initLocationService() {
         locationService = MyLocationService(this)
         locationService.locationCallback = object : LocationCallback {
             override fun locationSuccess(location: Location?) {
-                if (location == null)
+                val res = if (location == null)
                     addGameRecord(
                         Constants.LocationDefault.LATITUDE,
                         Constants.LocationDefault.LONGITUDE
                     )
                 else
                     addGameRecord(location.latitude, location.longitude)
+
+                if (res) {
+                    gameLoop()
+                }
             }
 
             override fun locationFailure(exception: Exception?) {
@@ -135,13 +144,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initTimer() {
+        timer = object : CountDownTimer(60000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                gameManager.moveAsteroids()
+                refreshAsteroids()
+                refreshCoins()
+                checkIfPlayerCrashed()
+                tryToCollectCoins()
+                odometerLabel.text = gameManager.distance.toString()
+            }
+
+            override fun onFinish() {
+                timer.start()
+            }
+        }
+    }
+
     private fun initTiltDetector() {
         tiltDetector = TiltDetector(
             context = this,
             tiltCallback = object : TiltCallback {
                 override fun tiltX() {
-                    tiltDetector.tiltX.also {
-                        if (it != 0f) {
+                    tiltDetector?.tiltX.also {
+                        if (it != 0f && it != null) {
                             gameManager.movePlayer(it > 0)
                             refreshPlayer()
                         }
@@ -235,24 +261,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun gameLoop() {
+        gameManager.reset()
+
         if (!isInButtonsMode)
-            tiltDetector.start()
+            tiltDetector?.start()
 
-        timer = object : CountDownTimer(60000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                gameManager.moveAsteroids()
-                refreshAsteroids()
-                refreshCoins()
-                checkIfPlayerCrashed()
-                tryToCollectCoins()
-                odometerLabel.text = gameManager.distance.toString()
-            }
-
-            override fun onFinish() {
-                timer.start()
-            }
-
-        }
+        initTimer()
         timer.start()
     }
 
@@ -330,12 +344,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun gameOver() {
         timer.cancel()
-        refreshAsteroids()
-        refreshCoins()
+        tiltDetector?.stop()
         locationService.lastLocation()
     }
 
-    private fun addGameRecord(lat: Double, lon: Double) {
+    private fun addGameRecord(lat: Double, lon: Double): Boolean {
         signalManager.toast(Constants.Toast.SAVING_RECORD)
 
         val record =
@@ -349,9 +362,20 @@ class MainActivity : AppCompatActivity() {
                 .timestamp(Instant.now().toEpochMilli())
                 .build()
 
-        DataManager.getInstance().addGameRecord(record)
-        signalManager.toast(Constants.Toast.RECORD_SAVED_SUCCESS)
+        val res = DataManager.getInstance().addGameRecord(record)
+        val message = if (res)
+            Constants.Toast.RECORD_SAVE_SUCCESS
+        else
+            Constants.Toast.RECORD_SAVE_FAILED
+
+        signalManager.toast(message)
+
         gameManager.reset()
+        refreshAsteroids()
+        refreshCoins()
+        refreshLifeCount()
+
+        return res
     }
 
     private fun displayCrashMessage() {

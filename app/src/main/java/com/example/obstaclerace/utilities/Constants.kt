@@ -27,7 +27,8 @@ class Constants {
         const val CRASH_MESSAGE = "The spaceship hit an asteroid!"
         const val GAME_OVER = "Game Over. Restarting"
         const val SAVING_RECORD = "Saving new record..."
-        const val RECORD_SAVED_SUCCESS = "Record saved successfully."
+        const val RECORD_SAVE_SUCCESS = "Record saved successfully."
+        const val RECORD_SAVE_FAILED = "Failed to save record."
     }
 
     object GameMode {

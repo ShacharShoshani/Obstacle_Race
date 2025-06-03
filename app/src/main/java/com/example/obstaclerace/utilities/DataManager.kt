@@ -37,8 +37,8 @@ class DataManager private constructor() {
         else 1L
     }
 
-    fun addGameRecord(record: GameRecord) {
-        gameRecords.add(record)
+    fun addGameRecord(record: GameRecord): Boolean {
+        return gameRecords.add(record)
     }
 
     fun loadFromDisk() {
